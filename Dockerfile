@@ -1,6 +1,8 @@
 FROM debian:jessie AS builder
 MAINTAINER Thibault Coupin <thibault.coupin@gmail.com>
 
+ENV http_proxy=${http_proxy} https_proxy=${https_proxy}
+
 RUN apt-get update && \
 	apt-get install -y perl libxml2-dev libgdal-perl liblog-log4perl-perl libconfig-inifiles-perl libxml-libxml-simple-perl libfile-copy-link-perl
 
@@ -14,10 +16,17 @@ RUN mkdir /be4 && unzip 0.25.4.zip && rm 0.25.4.zip && mv rok4-0.25.4 rok4 && ch
 FROM debian:jessie
 MAINTAINER Thibault Coupin <thibault.coupin@gmail.com>
 
+ENV http_proxy=${http_proxy} https_proxy=${https_proxy}
+
+
 RUN apt-get update && \
-	apt-get install -y perl libxml2-dev libgdal-perl liblog-log4perl-perl libconfig-inifiles-perl libxml-libxml-simple-perl libfile-copy-link-perl && \
-	mkdir /be4 && \
+	apt-get install -y perl libxml2-dev libgdal-perl liblog-log4perl-perl libconfig-inifiles-perl libxml-libxml-simple-perl libfile-copy-link-perl
+
+RUN mkdir /be4 && \
+	useradd -m -s /bin/bash be4 && \
+	(echo 'export PATH=$PATH:/be4/bin' > /home/be4/.bashrc)
 
 COPY --from=builder /be4/ /be4/
 
-COPY be4path.sh /etc/profile.d/
+USER be4
+WORKDIR /home/be4

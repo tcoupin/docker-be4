@@ -1,1 +1,0 @@
-export PATH=$PATH:/be4/bin
