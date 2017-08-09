@@ -23,10 +23,9 @@ RUN apt-get update && \
 	apt-get install -y perl libxml2-dev libgdal-perl liblog-log4perl-perl libconfig-inifiles-perl libxml-libxml-simple-perl libfile-copy-link-perl
 
 RUN mkdir /be4 && \
-	useradd -m -s /bin/bash be4 && \
-	(echo 'export PATH=$PATH:/be4/bin' > /home/be4/.bashrc)
+	useradd -m -s /bin/bash be4
 
-COPY --from=builder /be4/ /be4/
+COPY --from=builder /be4/ /usr/
 
 USER be4
 WORKDIR /home/be4
