@@ -1,6 +1,6 @@
 #!/bin/bash
-export PATH=$PATH:/be4/bin
-cd /DATA/Tuto_1_SCAN1000
+cd /rok4/config
+
 be4.pl --conf=proprietes.txt --env=environnement.txt
 
 bash scripts_be4/SCRIPT_1.sh &
