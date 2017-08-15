@@ -25,7 +25,8 @@ RUN apt-get update && \
 RUN mkdir /be4 && \
 	useradd -m -s /bin/bash be4
 
-COPY --from=builder /be4/ /usr/
+COPY --from=builder /be4/ /
 
 USER be4
+ENV PROJ_LIB=/var/rok4/data/proj/
 WORKDIR /home/be4
